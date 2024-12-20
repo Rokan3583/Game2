@@ -1,21 +1,11 @@
 from tkinter import *
 from pickle import load, dump
+import menu
 
+KEY_PAUSE = 19
 
-
-def set_status():
+def set_status(text, color='black'):
     canvas.itemconfig(text_id, text=text, fill=color)
-
-
-def pause_toggle():
-    global pause
-    pause = not pause
-    if pause:
-        print('ПАУЗА')
-    else:
-        print('ВПЕРЕД!')
-
-
 
 def key_handler(event):
     if event.keycode == KEY_UP:
@@ -26,14 +16,14 @@ def key_handler(event):
         menu.menu_enter(canvas, player1, player2)
 
     if game_over:
-        return
+          return
     if event.keycode == KEY_PAUSE:
-        menu.pause_toggle()
+         menu.pause_toggle()
 
     if menu.pause:
-        return
+         return
     if event.keycode == KEY_ESC:
-        menu.menu_toggle(canvas)
+         menu.menu_toggle(canvas)
 
     if menu.menu_mode:
         return
@@ -45,7 +35,6 @@ def key_handler(event):
         canvas.move(player2, SPEED, 0)
 
     check_finish()
-
 
 def check_finish():
     global game_over
@@ -65,19 +54,18 @@ def check_finish():
         set_status('Победа нижнего игрока', player2_color)
         game_over = True
 
-
-# область функций
-
-# область глобальных переменных
 game_width = 800
 game_height = 800
-
-
 
 KEY_UP = 87
 KEY_DOWN = 83
 KEY_ESC = 27
 KEY_ENTER = 13
+KEY_PLAYER1 = 39
+KEY_PLAYER2 = 68
+
+
+SPEED = 12
 
 player_size = 100
 x1, y1 = 50, 50
@@ -86,12 +74,6 @@ player1_color = 'red'
 player2_color = 'blue'
 
 x_finish = game_width - 50
-
-KEY_PLAYER1 = 39
-KEY_PLAYER2 = 68
-KEY_PAUSE = 19
-
-SPEED = 12
 
 game_over = False
 pause = False
@@ -102,7 +84,7 @@ window.title('Меню игры')
 
 canvas = Canvas(window, width=game_width, height=game_height, bg='white')
 canvas.pack()
-#menu_create(canvas)
+menu.menu_create(canvas)
 player1 = canvas.create_rectangle(x1,
                                   y1,
                                   x1 + player_size,
